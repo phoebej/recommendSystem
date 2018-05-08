@@ -1,0 +1,27 @@
+list1=[(2,'h',23),(23,'the',14),(13,'liu',90)]
+list2=sorted(list1,key=lambda x:x[2])
+#list1.sort(key=lambda x:x[2])
+#print(list2)
+import numpy as np
+
+
+
+file = open("E://pythonFile//Colon.csv",'r')
+tmp = np.loadtxt(file,delimiter=',')
+m=tmp.shape[1]
+dataset = tmp[:,:m-1]
+print(dataset.shape)
+l = [0.9,0.4,0.2,0.5,0.7]
+labels=[1,-1,-1,1,-1]
+fin = list(zip(l,labels))
+rank = [value for index,value in sorted(fin,key=lambda x:x[0])]
+rankList = [i+1 for i in range(len(rank)) if rank[i]==1]
+
+rank1 = np.argsort(l)
+class Solution(object):
+    pass
+
+#print(type(rank1))
+
+
+
