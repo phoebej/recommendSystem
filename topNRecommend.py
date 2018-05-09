@@ -1,9 +1,13 @@
+
 import math
 import numpy as np
 import pandas as pd
 import random
 from collections import defaultdict
 from collections import Counter
+_author_ = 'phoebe'
+_project_= 'topNRecommend'
+
 header = ['user_id', 'item_id', 'rating', 'timestamp']
 df = pd.read_csv('u.data', sep='\t', names=header)
 user_num = df['user_id'].unique().shape[0]
@@ -46,6 +50,28 @@ def Coverage(train,test,N):
         for item,pui in rank:
             recommend_items.add(item)
     return len(recommend_items)/(len(all_items)*1.0)
+def ItemSimilarity(data):
+    #calculate
+    N = defaultdict(int)
+    C = defaultdict(defaultdict)
+    for user,item in item_user.items():
+        for i in item:
+            N[i] += 1
+            C.setdefault(i, defaultdict(int))
+            for j in item:
+                if(i == j):
+                    continue
+                C[i][j] += 1
+    sim = defaultdict(defaultdict)
+    for i,related_item in C.items():
+        for j,cij in related_item.items():
+            sim[i][j] = cij/(math.sqrt(N[i]*N[j]))
+    print(sim)
+    return sim
+ItemSimilarity(data)
+
+
+
 def UserSimilarity(data):
     #inverse table for item_users
     item_users = {}
